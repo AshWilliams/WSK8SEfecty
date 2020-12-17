@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-demoefecty
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: demoefecty
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoefecty
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demoefecty
+  template:
+    metadata:
+      labels:
+        app: demoefecty
+    spec:
+      containers:
+      - name: demoefecty
+        image: ashwilliams/demoefecty:v2
+        ports:
+        - containerPort: 80
